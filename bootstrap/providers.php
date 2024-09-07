@@ -6,4 +6,6 @@ return [
     App\Providers\LivroServiceProvider::class,
     App\Providers\AutorServiceProvider::class,
     App\Providers\AutorRepositoryProvider::class,
+    App\Providers\AssuntoServiceProvider::class,
+    App\Providers\AssuntoRepositoryProvider::class,
 ];

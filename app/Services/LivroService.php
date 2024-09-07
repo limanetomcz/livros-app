@@ -4,46 +4,35 @@ namespace App\Services;
 
 use App\Contracts\Repositories\LivroRepositoryContract;
 use App\Contracts\Services\LivroServiceContract;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
+use App\Exceptions\LivroException;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 
-class LivroService implements LivroServiceContract
+class LivroService extends BasicService implements LivroServiceContract
 {
-    private $livroRepository;
+    protected $livroRepository;
 
     public function __construct(LivroRepositoryContract $livroRepository)
     {
+        parent::__construct($livroRepository);
         $this->livroRepository = $livroRepository;
     }
 
-    public function getAll(): Collection
-    {
-        return $this->livroRepository->getAll();
-    }
-
-    public function getById($codl): ?Model
-    {
-        return $this->livroRepository->getById($codl);
-    }
-
-    public function create($data): array
+    public function create(array $data): Model
     {
         DB::beginTransaction();
         try {
-            $livro = $this->livroRepository->create($data);
+            $livro = parent::create($data);
 
             if (isset($data['autores']) && is_array($data['autores'])) {
-                $this->livroRepository->syncAutores($livro['codl'], $data['autores']);
+                $this->livroRepository->syncAutores($livro->codl, $data['autores']);
             }
-
             DB::commit();
-
             return $livro;
-        } catch (\Exception $e) {
+        } catch (QueryException $e) {
             DB::rollBack();
-            throw $e;
+            throw new LivroException('Erro ao criar o livro no banco de dados', 'criação', null, $e);
         }
     }
 
@@ -51,28 +40,19 @@ class LivroService implements LivroServiceContract
     {
         DB::beginTransaction();
         try {
-            $updated = $this->livroRepository->update($codl, $data);
+            $updated = parent::update($codl, $data);
 
             if ($updated && isset($data['autores']) && is_array($data['autores'])) {
                 $this->livroRepository->syncAutores($codl, $data['autores']);
             }
-
+            if ($updated && isset($data['assuntos']) && is_array($data['assuntos'])) {
+                $this->livroRepository->syncAssuntos($codl, $data['assuntos']);
+            }
             DB::commit();
-
             return $updated;
-        } catch (\Exception $e) {
+        } catch (QueryException $e) {
             DB::rollBack();
-            throw $e;
+            throw new LivroException('Erro ao criar o livro no banco de dados', 'atualização', $codl);
         }
-    }
-
-    public function delete($codl): bool
-    {
-        return $this->livroRepository->delete($codl);
-    }
-
-    public function getAllPaginated($perPage): LengthAwarePaginator
-    {
-        return $this->livroRepository->getAllPaginated($perPage);
     }
 }

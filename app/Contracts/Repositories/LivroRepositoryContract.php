@@ -23,15 +23,15 @@ interface LivroRepositoryContract
      * @param int $codl
      * @return array|null
      */
-    public function getById(int $codl): ?Model;
+    public function getById(int $id): ?Model;
 
     /**
      * Cria um novo livro.
      * 
      * @param array $data
-     * @return array
+     * @return Model
      */
-    public function create(array $data): array;
+    public function create(array $data): Model;
 
     /**
      * Atualiza um livro existente.
@@ -57,4 +57,12 @@ interface LivroRepositoryContract
      * @param array $autores
      */
     public function syncAutores(int $codl, array $autores): void;
+    
+    /**
+     * Sincroniza os autores com o livro na tabela pivô
+     *
+     * @param int $codl
+     * @param array $autores
+     */
+    public function syncAssuntos(int $codl, array $assuntos): void;
 }

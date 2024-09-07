@@ -20,7 +20,13 @@
                 @csrf
                 <div class="mb-3">
                     <label for="nome" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="nome" name="nome" required>
+                    <input 
+                        type="text" 
+                        class="form-control @error('nome') is-invalid @enderror" 
+                        id="nome" 
+                        name="nome" 
+                        value="{{ old('nome') }}" 
+                        required>
                     @error('nome')
                         <div class="invalid-feedback">
                             {{ $message }}

@@ -5,7 +5,7 @@ namespace App\Contracts\Services;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-interface AutorServiceContract
+interface AssuntoServiceContract
 {
     public function getAll(): Collection;
     public function getFiltered(?string $filtro): Collection;

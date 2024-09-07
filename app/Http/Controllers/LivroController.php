@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contracts\Services\LivroServiceContract;
 use App\Models\Autor;
 use App\Http\Requests\LivroRequest;
+use App\Models\Assunto;
 use Illuminate\Http\Request;
 
 class LivroController extends Controller
@@ -33,9 +34,9 @@ class LivroController extends Controller
 
     public function create()
     {
-        // Obtendo todos os autores para selecionar no formulário
         $autores = Autor::all();
-        return view('livros.create', ['autores' => $autores]);
+        $assuntos = Assunto::all();
+        return view('livros.create', ['autores' => $autores, 'assuntos' => $assuntos]);
     }
 
     public function edit($id)
@@ -46,16 +47,17 @@ class LivroController extends Controller
             return redirect()->route('livros.index')->with('error', 'Livro não encontrado');
         }
 
-        // Carregando todos os autores e os autores selecionados para o livro
+        
         $autores = Autor::all();
-        return view('livros.edit', ['livro' => $livro, 'autores' => $autores]);
+        $assuntos = Assunto::all();
+        return view('livros.edit', ['livro' => $livro, 'autores' => $autores, 'assuntos' => $assuntos]);
     }
 
     public function store(LivroRequest $request)
     {
-        // Valida a entrada e chama o service para criar o livro com autores
         $data = $request->validated();
         $data['autores'] = $request->autores;
+        $data['assuntos'] = $request->assuntos;
 
         $livro = $this->livrosService->create($data);
 
@@ -68,10 +70,9 @@ class LivroController extends Controller
 
     public function update(LivroRequest $request, $id)
     {
-        // Valida a entrada e chama o service para atualizar o livro e autores
         $data = $request->validated();
         $data['autores'] = $request->autores;
-
+        $data['assuntos'] = $request->assuntos;
         $updated = $this->livrosService->update($id, $data);
 
         if ($updated) {

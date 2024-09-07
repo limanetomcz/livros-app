@@ -7,31 +7,25 @@ use App\Contracts\Services\AutorServiceContract;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-class AutorService implements AutorServiceContract
+class AutorService extends BasicService implements AutorServiceContract
 {
-    private $repository;
+    protected $repository;
+    
     public function __construct(AutorRepositoryContract $repository)
     {
         $this->repository = $repository;
     }
-    public function getAll(): Collection
+
+    public function getFiltered(?string $filtro): Collection
     {
-        return $this->repository->getAll();
-    }
-    public function getById($codl): ?Model
-    {
-        return $this->repository->getById($codl);
-    }
-    public function create($data): array
-    {
-        return $this->repository->create($data);
-    }
-    public function update($codl, $data): bool
-    {
-        return $this->repository->update($codl, $data);
-    }
-    public function delete($codl): bool
-    {
-        return $this->repository->delete($codl);
+        $autores = $this->getAll();
+
+        if ($filtro) {
+            $autores = $autores->filter(function ($autor) use ($filtro) {
+                return stripos($autor['nome'], $filtro) !== false;
+            });
+        }
+
+        return $autores;
     }
 }

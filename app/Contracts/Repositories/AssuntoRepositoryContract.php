@@ -1,32 +1,29 @@
 <?php
 
-namespace App\Contracts\Services;
+namespace App\Contracts\Repositories;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-interface LivroServiceContract
+interface AssuntoRepositoryContract
 {
     /**
-     * Retorna todos os livros.
+     * Retorna todos os assuntos.
      * 
-     * @return Collection
+     * @return array
      */
     public function getAll(): Collection;
 
-    public function getAllPaginated(int $perPage): LengthAwarePaginator;
-
     /**
-     * Retorna um livro pelo ID.
+     * Retorna um assunto pelo ID.
      * 
-     * @param int $codl
-     * @return Model|null
+     * @param int $codal
+     * @return array|null
      */
     public function getById(int $id): ?Model;
 
     /**
-     * Cria um novo livro.
+     * Cria um novo assunto.
      * 
      * @param array $data
      * @return Model
@@ -34,7 +31,7 @@ interface LivroServiceContract
     public function create(array $data): Model;
 
     /**
-     * Atualiza um livro existente.
+     * Atualiza um assunto existente.
      * 
      * @param int $id
      * @param array $data
@@ -43,7 +40,7 @@ interface LivroServiceContract
     public function update(int $id, array $data): bool;
 
     /**
-     * Exclui um livro.
+     * Exclui um assunto.
      * 
      * @param int $id
      * @return bool

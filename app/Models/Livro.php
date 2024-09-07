@@ -13,7 +13,8 @@ class Livro extends Model
         'titulo',
         'editora',
         'edicao',
-        'ano_publicacao'
+        'ano_publicacao',
+        'valor'
     ];
 
     protected $primaryKey = 'codl';
@@ -21,5 +22,10 @@ class Livro extends Model
     public function autores()
     {
         return $this->belongsToMany(Autor::class, 'autor_livro', 'codl', 'codau');
+    }
+
+    public function assuntos()
+    {
+        return $this->belongsToMany(Assunto::class, 'assunto_livro', 'codl', 'codas');
     }
 }

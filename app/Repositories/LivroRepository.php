@@ -31,4 +31,17 @@ class LivroRepository extends BaseRepository implements LivroRepositoryContract
             $livro->autores()->sync($autores);
         }
     }
+
+    /**
+     *
+     * @param int $codl
+     * @param array $assuntos
+     */
+    public function syncAssuntos(int $codl, array $assuntos): void
+    {
+        $livro = $this->model->find($codl);
+        if ($livro) {
+            $livro->assuntos()->sync($assuntos);
+        }
+    }
 }

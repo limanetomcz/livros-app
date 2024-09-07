@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\Services\AutorServiceContract;
 use App\Http\Requests\AutorRequest;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class AutorController extends Controller
@@ -17,15 +18,13 @@ class AutorController extends Controller
 
     public function index(Request $request)
     {
-        $query = $this->autoresService->getAll();
 
-        if ($request->filled('filtro')) {
-            $query = array_filter($query, function ($autor) use ($request) {
-                return stripos($autor['titulo'], $request->filtro) !== false || stripos($autor['editora'], $request->filtro) !== false;
-            });
-        }
+        $autores = $this->autoresService->getFiltered($request->filtro);
 
-        return view('autores.index', ['autores' => $query, 'filtro' => $request->filtro]);
+        return view('autores.index', [
+            'autores' => $autores,
+            'filtro' => $request->filtro
+        ]);
     }
 
     public function edit($id)

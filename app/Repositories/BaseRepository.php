@@ -2,8 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Contracts\Repositories\LivroRepositoryContract;
-use App\Models\Livro;
+
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,16 +15,16 @@ abstract class BaseRepository
         return $this->model->all();
     }
 
-    public function getById($codl): ?Model
+    public function getById($id): ?Model
     {
-        $result = $this->model->find($codl);
+        $result = $this->model->where($this->model->getKeyName(),$id)->first();
         return $result ? $result : null;
     }
 
-    public function create($data): array
+    public function create($data): Model
     {
         $result = $this->model->create($data);
-        return $result->toArray();
+        return $result;
     }
 
     public function update($id, $data): bool

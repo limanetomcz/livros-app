@@ -20,15 +20,15 @@ interface AutorRepositoryContract
      * @param int $codal
      * @return array|null
      */
-    public function getById(int $codal): ?Model;
+    public function getById(int $id): ?Model;
 
     /**
      * Cria um novo autor.
      * 
      * @param array $data
-     * @return array
+     * @return Model
      */
-    public function create(array $data): array;
+    public function create(array $data): Model;
 
     /**
      * Atualiza um autor existente.
