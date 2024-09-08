@@ -100,11 +100,12 @@
                 <div class="col-md-4">
                         <label for="valor" class="form-label">Valor</label>
                         <input type="number" 
-                            class="form-control @error('valor') is-invalid @enderror" 
-                            id="valor" 
-                            name="valor" 
-                            value="{{ old('valor') }}" 
-                            required>
+                        class="form-control @error('valor') is-invalid @enderror" 
+                        id="valor" 
+                        name="valor" 
+                        value="{{ old('valor') }}" 
+                        step="0.01" 
+                        required>
                         @error('valor')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -117,7 +118,6 @@
         </div>
     </div>
 
-    <!-- Grid de Livros -->
     @if($livros->count() > 0)
         <table class="table table-striped">
             <thead>

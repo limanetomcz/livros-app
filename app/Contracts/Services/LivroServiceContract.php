@@ -15,7 +15,7 @@ interface LivroServiceContract
      */
     public function getAll(): Collection;
 
-    public function getAllPaginated(int $perPage): LengthAwarePaginator;
+    public function getAllPaginated(int $perPage, $request): array;
 
     /**
      * Retorna um livro pelo ID.

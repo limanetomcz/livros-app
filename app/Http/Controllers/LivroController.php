@@ -9,6 +9,7 @@ use App\Http\Requests\LivroRequest;
 use App\Models\Assunto;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class LivroController extends Controller
 {
@@ -22,16 +23,8 @@ class LivroController extends Controller
     public function index(Request $request)
     {
         $perPage = 5;
-
-        $query = $this->livrosService->getAllPaginated($perPage);
-
-        if ($request->filled('filtro')) {
-            $query = array_filter($query->items(), function ($livro) use ($request) {
-                return stripos($livro->titulo, $request->filtro) !== false || stripos($livro->editora, $request->filtro) !== false;
-            });
-        }
-
-        return view('livros.index', ['livros' => $query, 'filtro' => $request->filtro]);
+        $dados = $this->livrosService->getAllPaginated($perPage, $request);
+        return view('livros.index', ['livros' => $dados["dados"], 'filtro' => $dados["filtro"]]);
     }
 
     public function create()

@@ -6,13 +6,14 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class BasicService
 {
     protected $repository;
+    protected $lengthAwarePaginator;
 
     public function __construct($repository)
     {
@@ -65,8 +66,31 @@ class BasicService
         return $this->repository->delete($id);
     }
 
-    public function getAllPaginated(int $perPage): LengthAwarePaginator
+    public function getAllPaginated(int $perPage, $request): array
     {
-        return $this->repository->getAllPaginated($perPage);
+        // Obtém a paginação do repositório
+        $query = $this->repository->getAllPaginated($perPage);
+    
+        // Aplica o filtro se o campo 'filtro' estiver preenchido
+        if ($request->filled('filtro')) {
+            $filtered = array_filter($query->items(), function ($livro) use ($request) {
+                return stripos($livro->titulo, $request->filtro) !== false || stripos($livro->editora, $request->filtro) !== false;
+            });
+    
+            // Recria o LengthAwarePaginator com os itens filtrados
+            $query = new LengthAwarePaginator(
+                $filtered,
+                count($filtered),
+                $perPage,
+                $request->get('page', 1),
+                ['path' => $request->url(), 'query' => $request->query()]
+            );
+        }
+    
+        // Retorna os dados e o filtro aplicados
+        return [
+            'dados' => $query,
+            'filtro' => $request->filtro
+        ];
     }
 }
