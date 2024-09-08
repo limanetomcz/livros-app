@@ -9,6 +9,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
+            <a class="navbar-brand" href="{{ route('index') }}">Home</a>
             <a class="navbar-brand" href="{{ route('livros.index') }}">Livros</a>
             <a class="navbar-brand" href="{{ route('autores.index') }}">Autores</a>
             <a class="navbar-brand" href="{{ route('assuntos.index') }}">Assuntos</a>

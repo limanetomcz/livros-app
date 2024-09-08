@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Services\LivroServiceContract;
+use App\Exceptions\LivroException;
 use App\Models\Autor;
 use App\Http\Requests\LivroRequest;
 use App\Models\Assunto;
+use Exception;
 use Illuminate\Http\Request;
 
 class LivroController extends Controller
@@ -47,7 +49,7 @@ class LivroController extends Controller
             return redirect()->route('livros.index')->with('error', 'Livro não encontrado');
         }
 
-        
+
         $autores = Autor::all();
         $assuntos = Assunto::all();
         return view('livros.edit', ['livro' => $livro, 'autores' => $autores, 'assuntos' => $assuntos]);
@@ -59,13 +61,14 @@ class LivroController extends Controller
         $data['autores'] = $request->autores;
         $data['assuntos'] = $request->assuntos;
 
-        $livro = $this->livrosService->create($data);
-
-        if ($livro) {
+        try {
+            $livro = $this->livrosService->create($data);
             return redirect()->route('livros.index')->with('success', 'Livro cadastrado com sucesso');
+        } catch (LivroException $e) {
+            return redirect()->route('livros.index')->with('error', 'Erro ao cadastrar o livro: ' . $e->getDetailedMessage());
+        } catch (\Exception $e) {
+            return redirect()->route('livros.index')->with('error', 'Ocorreu um erro inesperado.');
         }
-
-        return redirect()->route('livros.index')->with('error', 'Livro não cadastrado');
     }
 
     public function update(LivroRequest $request, $id)

@@ -1,66 +1,122 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>README - Desafio - Cadastro de Livros</title>
+</head>
+<body>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<h1>Desafio - Cadastro de Livros</h1>
 
-## About Laravel
+<h2>Objetivo</h2>
+<p>O objetivo deste projeto é criar uma aplicação de cadastro de livros seguindo as boas práticas de mercado. O projeto envolve a criação de CRUDs para as entidades <strong>Livro</strong>, <strong>Autor</strong> e <strong>Assunto</strong>, além da geração de relatórios agrupados por autor, conforme o modelo de dados fornecido.</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p>O projeto foi desenvolvido utilizando as tecnologias web referentes à vaga.</p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<h2>Tecnologias Utilizadas</h2>
+<ul>
+    <li><strong>Backend</strong>: <a href="https://laravel.com/">Laravel</a></li>
+    <li><strong>Banco de Dados</strong>: <strong>MySQL</strong></li>
+    <li><strong>Relatórios</strong>: Relatórios gerados utilizando <a href="https://github.com/geekcom/phpjasper">PHPJasper</a></li>
+    <li><strong>Frontend</strong>: <a href="https://getbootstrap.com/">Bootstrap</a> para o design da interface e formatação de componentes</li>
+    <li><strong>Testes</strong>: Implementação de TDD</li>
+</ul>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+<h2>Instruções para Configuração do Projeto</h2>
 
-## Learning Laravel
+<h3>1. Requisitos do Sistema</h3>
+<ul>
+    <li><strong>PHP 8.3 ou superior</strong></li>
+    <li><strong>Composer</strong></li>
+    <li><strong>MySQL</strong> como banco de dados</li>
+    <li><strong>Java Runtime Environment (JRE)</strong> para geração de relatórios com PHPJasper</li>
+</ul>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+<h3>2. Instalação do Projeto</h3>
+<p>Siga os passos abaixo para configurar o projeto localmente:</p>
+<ol>
+    <li><strong>Clone o repositório:</strong>
+        <pre><code>git clone &lt;link-do-repositorio&gt;
+cd nome-do-repositorio</code></pre>
+    </li>
+    <li><strong>Instale as dependências do Composer:</strong>
+        <pre><code>composer install</code></pre>
+    </li>
+    <li><strong>Copie o arquivo .env:</strong>
+        <pre><code>cp .env.example .env</code></pre>
+    </li>
+    <li><strong>Configure as variáveis de ambiente no arquivo .env:</strong>
+        <pre><code>DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=livros_db
+DB_USERNAME=root
+DB_PASSWORD=secret</code></pre>
+    </li>
+    <li><strong>Execute as migrações para criar as tabelas no banco de dados:</strong>
+        <pre><code>./vendor/bin/sail artisan migrate</code></pre>
+    </li>
+    <li><strong>Iniciar o servidor:</strong>
+        <pre><code>./vendor/bin/sail artisan serve</code></pre>
+    </li>
+</ol>
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+<h3>3. Instalação do Java</h3>
+<p>Este projeto utiliza <strong>PHPJasper</strong> para a geração de relatórios, o que requer a instalação do <strong>Java Runtime Environment (JRE)</strong>.</p>
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+<h4>Para usuários de Linux (Ubuntu/Debian):</h4>
+<ol>
+    <li>Remova versões antigas do Java:
+        <pre><code>sudo apt-get remove --purge openjdk*</code></pre>
+    </li>
+    <li>Atualize os pacotes:
+        <pre><code>sudo apt-get update</code></pre>
+    </li>
+    <li>Instale o OpenJDK 8:
+        <pre><code>sudo apt-get install -y openjdk-8-jre</code></pre>
+    </li>
+</ol>
 
-## Laravel Sponsors
+<h4>Para usuários de Windows:</h4>
+<ol>
+    <li>Baixe o JRE do <a href="https://www.oracle.com/java/technologies/javase-jre8-downloads.html">site oficial do Oracle</a>.</li>
+    <li>Siga as instruções do instalador.</li>
+</ol>
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+<h4>Para usuários de MacOS:</h4>
+<pre><code>brew install --cask adoptopenjdk</code></pre>
 
-### Premium Partners
+<p>Após instalar o Java, verifique a instalação:</p>
+<pre><code>java -version</code></pre>
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+<h3>4. Geração de Relatórios</h3>
+<p>Este projeto inclui relatórios gerados a partir de uma <strong>view</strong> do banco de dados, agrupados por autor. Para gerar relatórios:</p>
+<ul>
+    <li>Verifique se o Java está instalado conforme instruções anteriores.</li>
+    <li>Utilize o componente <strong>PHPJasper</strong> para compilar e gerar o relatório.</li>
+</ul>
 
-## Code of Conduct
+<h3>5. Testes (opcional)</h3>
+<p>Este projeto suporta o desenvolvimento orientado por testes (TDD). Se você optar por essa abordagem, utilize o PHPUnit para rodar os testes:</p>
+<pre><code>php artisan test</code></pre>
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+<h2>Funcionalidades do Projeto</h2>
+<ul>
+    <li><strong>CRUD</strong> de <strong>Livro</strong>, <strong>Autor</strong> e <strong>Assunto</strong></li>
+    <li>Interface simples utilizando <strong>Bootstrap</strong> para formatação de componentes</li>
+    <li>Relatório gerado e agrupado por <strong>Autor</strong>, com informações dos livros e assuntos relacionados</li>
+    <li>Adição de campo <strong>Valor (R$)</strong> para o livro</li>
+    <li><strong>Tratamento de Erros:</strong> Tratamentos específicos para possíveis erros de banco de dados e exceções, evitando o uso de try-catch genéricos</li>
+</ul>
 
-## Security Vulnerabilities
+<h2>Modelo de Dados</h2>
+<p>O modelo de dados utilizado segue as especificações fornecidas, com a adição de um campo de <strong>Valor (R$)</strong> para a tabela <strong>Livro</strong>.</p>
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+<h2>Apresentação</h2>
+<p>Este projeto foi criado apenas para o desafio técnico. Não recomendamos para uso comercial.</p>
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+</body>
+</html>

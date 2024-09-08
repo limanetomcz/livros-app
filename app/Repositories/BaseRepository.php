@@ -12,7 +12,7 @@ abstract class BaseRepository
 
     public function getAll(): Collection
     {
-        return $this->model->all();
+        return $this->model->orderBy($this->model->getKeyName(), 'desc')->get();
     }
 
     public function getById($id): ?Model

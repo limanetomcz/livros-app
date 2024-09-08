@@ -10,7 +10,6 @@ class LivroException extends Exception
     protected $operation;
 
     /**
-     * Construtor customizado para LivroException
      *
      * @param string $message
      * @param string|null $operation

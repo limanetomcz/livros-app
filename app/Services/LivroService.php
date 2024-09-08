@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Contracts\Repositories\LivroRepositoryContract;
 use App\Contracts\Services\LivroServiceContract;
 use App\Exceptions\LivroException;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
@@ -52,7 +53,10 @@ class LivroService extends BasicService implements LivroServiceContract
             return $updated;
         } catch (QueryException $e) {
             DB::rollBack();
-            throw new LivroException('Erro ao criar o livro no banco de dados', 'atualização', $codl);
+            throw new LivroException('Erro ao salvar os dados no banco de dados.' . $e->getMessage(), 'create', null, $e);
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new LivroException('Erro inesperado ao criar o livro.'. $e->getMessage(), 'create', null, $e);
         }
     }
 }

@@ -21,7 +21,8 @@ class LivroTest extends TestCase
             'titulo' => 'Livro de Teste',
             'editora' => 'Autor Exemplo',
             'edicao' => 1,
-            'ano_publicacao'=>'2024'
+            'ano_publicacao'=>'2024',
+            'valor' => 19.99,
         ];
 
         $livro = Livro::create($livroData);
@@ -44,6 +45,7 @@ class LivroTest extends TestCase
         $this->assertEquals($livro->edicao, $foundLivro->edicao);
         $this->assertEquals($livro->editora, $foundLivro->editora);
         $this->assertEquals($livro->ano_publicacao, $foundLivro->ano_publicacao);
+        $this->assertEquals($livro->valor, $foundLivro->valor);
     }
 
     /**

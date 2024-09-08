@@ -49,24 +49,24 @@ services:
             retries: 3
             timeout: 5s
 
-    jasperreports:
-        image: bitnami/jasperreports:latest
-        networks:
-            - sail
-        ports:
-            - '8080:8080'
-        depends_on:
-            - mysql
-        environment:
-            - JASPERREPORTS_DATABASE_TYPE=mysql
-            - JASPERREPORTS_DATABASE_HOST=mysql
-            - JASPERREPORTS_DATABASE_PORT_NUMBER=3306
-            - JASPERREPORTS_DATABASE_USER=sail
-            - JASPERREPORTS_DATABASE_PASSWORD=password
-            - JASPERREPORTS_DATABASE_NAME=laravel     
-            - JASPERREPORTS_USERNAME=admin
-            - JASPERREPORTS_PASSWORD=admin
-            - JAVA_TOOL_OPTIONS="-Duser.timezone=America/Maceio -Duser.language=pt -Duser.region=BR -Dlog4j2.formatMsgNoLookups=true"
+    # jasperreports:
+    #     image: bitnami/jasperreports:latest
+    #     networks:
+    #         - sail
+    #     ports:
+    #         - '8080:8080'
+    #     depends_on:
+    #         - mysql
+    #     environment:
+    #         - JASPERREPORTS_DATABASE_TYPE=mysql
+    #         - JASPERREPORTS_DATABASE_HOST=mysql
+    #         - JASPERREPORTS_DATABASE_PORT_NUMBER=3306
+    #         - JASPERREPORTS_DATABASE_USER=sail
+    #         - JASPERREPORTS_DATABASE_PASSWORD=password
+    #         - JASPERREPORTS_DATABASE_NAME=laravel     
+    #         - JASPERREPORTS_USERNAME=admin
+    #         - JASPERREPORTS_PASSWORD=admin
+    #         - JAVA_TOOL_OPTIONS="-Duser.timezone=America/Maceio -Duser.language=pt -Duser.region=BR -Dlog4j2.formatMsgNoLookups=true"
 networks:
     sail:
         driver: bridge

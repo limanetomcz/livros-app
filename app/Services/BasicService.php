@@ -2,10 +2,13 @@
 
 namespace App\Services;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Log;
 
 class BasicService
 {
@@ -33,9 +36,14 @@ class BasicService
             $model = $this->repository->create($data);
             DB::commit();
             return $model;
-        } catch (\Exception $e) {
+        } catch (QueryException $e) {
             DB::rollBack();
-            throw $e;
+            Log::error('Erro de banco de dados na criação do modelo: ' . $e->getMessage());
+            throw new Exception('Erro ao salvar os dados no banco de dados. Verifique os dados fornecidos.', 500);
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error('Erro geral na criação do modelo: ' . $e->getMessage());
+            throw new Exception('Erro inesperado ao criar o modelo. Entre em contato com o suporte.', 500);
         }
     }
 

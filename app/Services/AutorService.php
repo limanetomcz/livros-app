@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Contracts\Repositories\AutorRepositoryContract;
 use App\Contracts\Services\AutorServiceContract;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
 class AutorService extends BasicService implements AutorServiceContract
 {

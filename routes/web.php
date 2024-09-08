@@ -4,6 +4,11 @@ use App\Http\Controllers\AssuntoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AutorController;
 use App\Http\Controllers\LivroController;
+use App\Http\Controllers\ReportController;
+
+Route::get('/', function () {
+    return view('index');
+})->name('index');
 
 Route::get('/livros', [LivroController::class, 'index'])->name('livros.index');
 Route::post('/livros', [LivroController::class, 'store'])->name('livros.store');
@@ -22,3 +27,6 @@ Route::post('/assuntos', [AssuntoController::class, 'store'])->name('assuntos.st
 Route::get('/assuntos/{id}/edit', [AssuntoController::class, 'edit'])->name('assuntos.edit');
 Route::put('/assuntos/{id}', [AssuntoController::class, 'update'])->name('assuntos.update');
 Route::delete('/assuntos/{id}', [AssuntoController::class, 'destroy'])->name('assuntos.destroy');
+
+Route::get('/relatorio', [ReportController::class, 'generateReport']);
+Route::get('/compile-relatorio', [ReportController::class, 'compileReport']);

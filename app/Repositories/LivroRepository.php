@@ -16,7 +16,7 @@ class LivroRepository extends BaseRepository implements LivroRepositoryContract
 
     public function getAllPaginated(int $perPage): LengthAwarePaginator
     {
-        return $this->model->paginate($perPage);
+        return $this->model->orderBy($this->model->getKeyName(), 'desc')->paginate($perPage);
     }
 
     /**

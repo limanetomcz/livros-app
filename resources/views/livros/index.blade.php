@@ -13,6 +13,17 @@
 
     <div class="card mb-4">
         <div class="card-header">Adicionar Novo Livro</div>
+        @if(session('success'))
+            <div class="alert alert-success" id="msgRetorno">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger" id="msgRetorno">
+                {{ session('error') }}
+            </div>
+        @endif
         <div class="card-body">
             <form method="POST" action="{{ route('livros.store') }}">
                 @csrf
@@ -163,9 +174,26 @@
         </table>
 
         {{ $livros->links('pagination::bootstrap-4') }}
-
+        <div style="text-align: center; margin-top: 20px;">
+            <form action="{{ url('/relatorio') }}" method="GET" target="_blank">
+                <button type="submit" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    Gerar Relatório
+                </button>
+            </form>
+        </div>
     @else
         <p class="text-center">Nenhum livro encontrado.</p>
     @endif
+
+
 </div>
 @endsection
+
+<script>
+    setTimeout(function() {
+        var successMessage = document.getElementById('msgRetorno');
+        if (successMessage) {
+            successMessage.style.display = 'none';
+        }
+    }, 5000);
+</script>
