@@ -68,16 +68,13 @@ class BasicService
 
     public function getAllPaginated(int $perPage, $request): array
     {
-        // Obtém a paginação do repositório
         $query = $this->repository->getAllPaginated($perPage);
     
-        // Aplica o filtro se o campo 'filtro' estiver preenchido
         if ($request->filled('filtro')) {
             $filtered = array_filter($query->items(), function ($livro) use ($request) {
                 return stripos($livro->titulo, $request->filtro) !== false || stripos($livro->editora, $request->filtro) !== false;
             });
     
-            // Recria o LengthAwarePaginator com os itens filtrados
             $query = new LengthAwarePaginator(
                 $filtered,
                 count($filtered),
@@ -87,7 +84,6 @@ class BasicService
             );
         }
     
-        // Retorna os dados e o filtro aplicados
         return [
             'dados' => $query,
             'filtro' => $request->filtro
